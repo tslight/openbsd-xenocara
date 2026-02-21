@@ -536,11 +536,25 @@ menu_keycode(XKeyEvent *ev, enum ctltype *ctl, char *chr)
 
 	if (*ctl == CTL_NONE && (ev->state & ControlMask)) {
 		switch (ks) {
+		case XK_j:
+		case XK_J:
+		case XK_m:
+		case XK_M:
+			*ctl = CTL_RETURN;
+			break;
+		case XK_i:
+		case XK_I:
+			*ctl = CTL_TAB;
+			break;
+		case XK_n:
+		case XK_N:
 		case XK_s:
 		case XK_S:
 			/* Emacs "next" */
 			*ctl = CTL_DOWN;
 			break;
+		case XK_p:
+		case XK_P:
 		case XK_r:
 		case XK_R:
 			/* Emacs "previous" */
@@ -548,6 +562,8 @@ menu_keycode(XKeyEvent *ev, enum ctltype *ctl, char *chr)
 			break;
 		case XK_u:
 		case XK_U:
+		case XK_w:
+		case XK_W:
 			*ctl = CTL_WIPE;
 			break;
 		case XK_h:
@@ -558,6 +574,7 @@ menu_keycode(XKeyEvent *ev, enum ctltype *ctl, char *chr)
 		case XK_A:
 			*ctl = CTL_ALL;
 			break;
+		case XK_g:
 		case XK_bracketleft:
 			*ctl = CTL_ABORT;
 			break;
