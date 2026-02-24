@@ -349,6 +349,8 @@ client_toggle_maximize(struct client_ctx *cc)
 		return;
 
 	if ((cc->flags & CLIENT_MAXFLAGS) == CLIENT_MAXIMIZED) {
+		if (!(cc->flags & CLIENT_IGNORE))
+			cc->bwidth = Conf.bwidth;
 		cc->geom = cc->savegeom;
 		cc->flags &= ~CLIENT_MAXIMIZED;
 		goto resize;
@@ -368,10 +370,8 @@ client_toggle_maximize(struct client_ctx *cc)
 	    cc->geom.x + cc->geom.w / 2,
 	    cc->geom.y + cc->geom.h / 2, 1);
 
-	cc->geom.x = area.x;
-	cc->geom.y = area.y;
-	cc->geom.w = area.w - (cc->bwidth * 2);
-	cc->geom.h = area.h - (cc->bwidth * 2);
+	cc->bwidth = 0;
+	cc->geom = area;
 	cc->flags |= CLIENT_MAXIMIZED;
 
 resize:
